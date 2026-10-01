@@ -1,0 +1,52 @@
+---
+title: Theming
+---
+
+import ThemeGallery from '@site/src/components/ThemeGallery';
+
+# Theming
+
+Built-in: `lichess`, `chesscom`, `classic`, `midnight`, `broadcast`, `high-contrast`.
+
+<ThemeGallery />
+
+```js
+ChessEvalBar('#bar', { encoding: { length: { value: 1.1, min: -4, max: 4 } }, label: { text: '+1.10' }, theme: 'midnight' })
+
+ChessEvalBar('#bar', {
+  theme: {
+    name: 'custom',
+    white: '#fffaf0',
+    black: '#1b1b1b',
+    border: '#111',
+    radius: 8,
+  },
+})
+```
+
+| Option | Default | Notes |
+| --- | --- | --- |
+| `name` | `'lichess'` | Named theme to start from when you pass a partial object |
+| `white` / `black` | from named theme | Fill colors |
+| `track` / `border` / `zeroLine` | from named theme | |
+| `labelColor` | `#111` or `#fff` | Off-bar and center captions. Computed from both fills. Override to pin a color |
+| `labelOnWhite` | from White fill | Ink on the White segment. Override to pin a color |
+| `labelOnBlack` | from Black fill | Ink on the Black segment. Override to pin a color |
+| `fontFamily` / `radius` | from named theme | |
+
+Colors and radius are also CSS variables (`--ceb-white`, `--ceb-black`, `--ceb-track`, `--ceb-border`, `--ceb-zero`, `--ceb-label`, `--ceb-label-on-white`, `--ceb-label-on-black`, `--ceb-font`, `--ceb-radius`):
+
+```css
+.my-broadcast .ceb {
+  --ceb-white: #f8f4ea;
+  --ceb-black: #26211b;
+  --ceb-track: #26211b;
+  --ceb-border: #111;
+  --ceb-zero: rgba(0, 0, 0, 0.28);
+  --ceb-label: #111;
+  --ceb-label-on-white: #111;
+  --ceb-label-on-black: #f7f7f7;
+  --ceb-radius: 8px;
+  --ceb-font: "IBM Plex Sans", sans-serif;
+}
+```

@@ -1,0 +1,42 @@
+---
+title: Examples
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import {ExampleCard} from '@site/src/components/ExampleCard';
+import {StaticCompositeBoard} from '@site/src/components/StaticCompositeBoard';
+import {BASIC_EXAMPLE} from '@site/src/components/compositeEncode';
+import {AdvancedExamples} from '@site/src/components/AdvancedExamples';
+import {LiveDemo} from '@site/src/components/LiveDemo';
+import {MeasureGlossary} from '@site/src/components/MeasureGlossary';
+
+# Examples
+
+<Tabs lazy>
+  <TabItem value="basic" label="Basic" default>
+
+<div className="example-card-grid">
+<ExampleCard title={BASIC_EXAMPLE.title} lede={BASIC_EXAMPLE.lede} code={BASIC_EXAMPLE.code}>
+  <StaticCompositeBoard fen={BASIC_EXAMPLE.fen} layers={BASIC_EXAMPLE.layers} />
+</ExampleCard>
+</div>
+
+  </TabItem>
+  <TabItem value="advanced" label="Advanced">
+
+<MeasureGlossary />
+
+<AdvancedExamples />
+
+  </TabItem>
+  <TabItem value="live" label="Live">
+
+<MeasureGlossary />
+
+White’s first move starts the clocks. ATP updates every second. N updates on each move.
+
+<LiveDemo />
+
+  </TabItem>
+</Tabs>

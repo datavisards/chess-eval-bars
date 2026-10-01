@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Length and thickness encodings</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
+    />
+    <link rel="stylesheet" href="../../dist/styles.css" />
+    <style>
+      body {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        margin: 32px;
+        background: #f6f5f1;
+        color: #1b1b1b;
+      }
+      h1 { font-size: 22px; margin: 0 0 8px; }
+      #b-board, #c-board { width: 360px; }
+    </style>
+  </head>
+  <body>
+    <h1>Bars with chessboard.js</h1>
+    <p>Each bar has an encoding. Length-only bars use <code>encoding.length</code>. Thickness-encoded bars add <code>encoding.thickness.white</code> / <code>black</code>.</p>
+
+    <h2>Length</h2>
+    <div id="b-frame">
+      <div id="b-board"></div>
+    </div>
+
+    <h2>Length and thickness</h2>
+    <div id="c-frame">
+      <div id="c-board"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+    <script type="module">
+      import { ChessEvalBar } from "../../dist/index.js";
+
+      const fen = "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N1P/PP1P1PP1/RNBQR1K1 b - - 0 10";
+      const pieceTheme = "img/chesspieces/wikipedia/{piece}.png";
+
+      function mount(frameId, boardId, config) {
+        Chessboard(boardId, { position: fen, pieceTheme });
+        ChessEvalBar("#" + frameId, {
+          theme: "lichess",
+          maxThickness: 26,
+          board: "#" + boardId,
+          ...config,
+        });
+      }
+
+      mount("b-frame", "b-board", {
+        layers: [
+          { attach: "left", label: "+0.50", encoding: { length: { value: 0.5, min: -4, max: 4 } }, maxThickness: 26, gap: 8 },
+          { attach: "left", label: "70", encoding: { length: { value: 70, max: 100 } }, maxThickness: 16, gap: 8 },
+          { attach: "top", label: "4", encoding: { length: { value: 4, max: 10 } }, maxThickness: 16, gap: 8 },
+        ],
+      });
+
+      mount("c-frame", "c-board", {
+        layers: [
+          {
+            attach: "left",
+            encoding: {
+              length: { value: 0.5, min: -4, max: 4 },
+              thickness: {
+                reverse: true,
+                white: { value: 0.2 },
+                black: { value: 0.8 },
+              },
+            },
+            hover: "Engine eval (length) · Move Criticality Index (thickness)",
+            annotations: {
+              length: { metricLabel: { text: "EE", hover: "Engine eval" }, metricText: "+0.50" },
+              thickness: {
+                metricLabel: { text: "MCI", hover: "Move Criticality Index" },
+                metricText: { white: "0.20", black: "0.80" },
+              },
+            },
+          },
+        ],
+      });
+    </script>
+  </body>
+</html>

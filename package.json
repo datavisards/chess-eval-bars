@@ -1,0 +1,72 @@
+{
+  "name": "chess-eval-bars",
+  "version": "1.0.1",
+  "description": "TypeScript library for drawing chess evaluation bars.",
+  "license": "MIT",
+  "author": {
+    "name": "Arpit Narechania",
+    "url": "https://narechania.com"
+  },
+  "homepage": "https://datavisards.com/chess-eval-bars/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datavisards/chess-eval-bars.git"
+  },
+  "bugs": {
+    "url": "https://github.com/datavisards/chess-eval-bars/issues"
+  },
+  "keywords": [
+    "chess",
+    "eval-bar",
+    "evaluation",
+    "chessboard",
+    "chessboardjs",
+    "visualization",
+    "typescript"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.node.json",
+    "test": "node --import tsx --test tests/api.test.ts",
+    "verify": "npm run typecheck && npm test && npm run build",
+    "docs:start": "npm --prefix website start",
+    "docs:build": "npm run build && npm --prefix website run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "happy-dom": "^20.0.10",
+    "tsx": "^4.20.6",
+    "tsup": "^8.5.0",
+    "typescript": "~6.0.3"
+  }
+}

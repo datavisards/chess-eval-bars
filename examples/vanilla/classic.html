@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>chess-eval-bars + chessboard.js</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css"
+    />
+    <link rel="stylesheet" href="../../dist/styles.css" />
+    <style>
+      body {
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        margin: 32px;
+        background: #f6f5f1;
+        color: #1b1b1b;
+      }
+      h1 { font-size: 22px; margin: 0 0 8px; }
+      p { max-width: 56rem; }
+      #stage { margin-top: 24px; }
+    </style>
+  </head>
+  <body>
+    <h1>Classic eval bar + chessboard.js</h1>
+    <p>
+      The board comes from chessboard.js. The bar is chess-eval-bars, sized from the board
+      and attached on the left.
+    </p>
+    <div id="stage">
+      <div id="board" style="width: 400px"></div>
+    </div>
+    <p>
+      <button id="flip">Flip</button>
+      <button id="worse">Black better</button>
+      <button id="mate">Mate</button>
+    </p>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+    <script type="module">
+      import { ChessEvalBar } from "../../dist/index.js";
+
+      const board = Chessboard("board", {
+        position: "start",
+        pieceTheme: "img/chesspieces/wikipedia/{piece}.png",
+      });
+      const bar = ChessEvalBar.attachToBoard("#board", {
+        encoding: { length: { value: 0.5, min: -4, max: 4 } },
+        label: { text: "+0.50" },
+        theme: "lichess",
+        attach: "left",
+      });
+      document.getElementById("flip").onclick = () => {
+        board.flip();
+        bar.update({ flipBoard: board.orientation() === "black" });
+      };
+      document.getElementById("worse").onclick = () =>
+        bar.update({ encoding: { length: { value: -1.8 } }, label: { text: "−1.80" } });
+      document.getElementById("mate").onclick = () =>
+        bar.update({ encoding: { length: { value: 4 } }, label: { text: "M3" } });
+    </script>
+  </body>
+</html>
